@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<!-- <link rel="stylesheet" href="css/normalize.css" />
+		<link rel="stylesheet" href="css/style.css" /> -->
+		<link rel="stylesheet" href="reset.css" />
+	</head>
+
+	<style>
+		/* bebas-neue-regular - latin */
+		@font-face {
+			font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+			font-family: "Bebas Neue";
+			font-style: normal;
+			font-weight: 400;
+			src: url("fonts/bebas-neue-v14-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		*,
+		*::before,
+		*::after h1 {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: "Bebas Neue";
+			margin: 0;
+			font-family: sans-serif;
+			box-sizing: border-box;
+			/* background-color: #ddd;
+
+	background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F000%2F575%2F893%2Foriginal%2Fwhite-and-gray-color-polygon-abstract-background-technology-modern-vector-illustration.jpg&f=1&nofb=1&ipt=c9c21b464c0a9a598f06fe4b055e38a736bbaaf292e348e7600055932218df7e&ipo=images");
+	background-size: cover; */
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-color: rgba(2, 2, 2, 0.88);
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+		}
+
+		header {
+			background-color: black;
+
+			padding: 20px 0;
+			margin-bottom: 50px;
+		}
+
+		h1 {
+			max-width: 350px;
+			/* border: 1px solid white; */
+			text-align: center;
+			color: rgb(238, 231, 231);
+			text-align: center; /* Выравнивание заголовка по центру */
+			font-family: Arial, sans-serif;
+			font-size: 42px;
+			margin: 0 auto;
+			padding: 8px 15px;
+			border-radius: 15px;
+			font-weight: 700;
+		}
+
+		main {
+			flex-grow: 1;
+			margin-bottom: 40px;
+		}
+
+		.main__container {
+			max-width: 1080px;
+			width: 100%;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+			border-radius: 15px;
+			/* background: rgba(255, 255, 255, 0.05); */
+			box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
+			height: 690px;
+		}
+
+		.chat-box-container {
+			width: 100%;
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+
+			background: rgb(0, 0, 0);
+			border-radius: 15px;
+			/* max-height: 290px; */
+			height: 100%;
+		}
+
+		.chat-box-header {
+			text-align: center;
+		}
+
+		.chat-box {
+			margin: 4px;
+			flex-grow: 1;
+			background: rgba(255, 255, 255, 0);
+			overflow-y: scroll;
+			padding: 6px;
+			border-radius: 20px;
+			max-height: 100%;
+		}
+
+		.chat-box p {
+			margin: 0;
+			padding: 6px;
+			font-size: 20px;
+			color: white;
+		}
+
+		.chat-input-container {
+			position: relative;
+			height: 60px;
+			width: 100%;
+			display: flex;
+			bottom: 0;
+			align-items: center;
+			justify-content: center;
+			background: rgb(0, 0, 0);
+			border-radius: 10px;
+		}
+
+		.chat-input::placeholder {
+			color: white;
+		}
+
+		/* .chat-submit {
+			width: 70px;
+			height: 47px !important;
+			padding: 2px 2px 2px 2px;
+			margin-right: 4px;
+			border: 2px solid black;
+			background-color: #9fa5a3;
+			font-size: 18px;
+			border-radius: 10px;
+			font-size: 20px;
+		} */
+
+		.chat-submit:hover {
+			cursor: pointer;
+			background-color: #f44336;
+			border-radius: 10px;
+		}
+
+		.chat-submit:focus {
+			outline: 0;
+			.tooltip-widget {
+				position: absolute;
+				display: none;
+				background-color: #008cba;
+				color: #fff;
+				border-radius: 5px;
+				padding: 10px;
+			}
+
+			.tooltip-content {
+				max-width: 200px;
+			}
+
+			.element {
+				cursor: pointer;
+			}
+		}
+
+		.footer {
+			background-color: black;
+			flex-shrink: 0;
+			padding: 15px 10px;
+			border-radius: 15px;
+		}
+
+		.footer__container {
+			max-width: 990px;
+			margin: 0 auto;
+		}
+
+		.chat-input {
+			height: 40px;
+			display: inline-block;
+			flex-grow: 1;
+			padding: 2px 2px 2px 2px;
+			margin: 0 4px 0 4px;
+			font-size: 15px;
+			border: 2px solid white;
+			background: rgba(255, 255, 255, 0.05);
+			border-radius: 10px;
+			color: white;
+			padding: 2px 5px;
+			outline: none;
+		}
+
+		.red-text {
+			color: white;
+		}
+		.text-color {
+			color: white;
+		}
+
+		.chat-submit {
+			--border-color: linear-gradient(-45deg, #ffae00, #7e03aa, #00fffb);
+			--border-width: 0.125em;
+			--curve-size: 0.5em;
+			--blur: 30px;
+			--bg: #080312;
+			--color: #afffff;
+			color: var(--color);
+			/* use position: relative; so that BG is only for .btn */
+			position: relative;
+			isolation: isolate;
+			display: inline-grid;
+			place-content: center;
+			padding: 10px;
+			font-size: 8px;
+			border: 0;
+			text-transform: uppercase;
+			box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.6);
+			clip-path: polygon(
+				/* Top-left */ 0% var(--curve-size),
+				var(--curve-size) 0,
+				/* top-right */ 100% 0,
+				100% calc(100% - var(--curve-size)),
+				/* bottom-right 1 */ calc(100% - var(--curve-size)) 100%,
+				/* bottom-right 2 */ 0 100%
+			);
+			transition: color 250ms;
+			font-size: 10px;
+		}
+
+		.chat-submit :after,
+		.chat-submit::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+		}
+
+		.chat-submit::before {
+			background: var(--border-color);
+			background-size: 300% 300%;
+			animation: move-bg7234 5s ease infinite;
+			z-index: -2;
+		}
+
+		@keyframes move-bg7234 {
+			0% {
+				background-position: 31% 0%;
+			}
+
+			50% {
+				background-position: 70% 100%;
+			}
+
+			100% {
+				background-position: 31% 0%;
+			}
+		}
+
+		.chat-submit::after {
+			background: var(--bg);
+			z-index: -1;
+			clip-path: polygon(
+				/* Top-left */ var(--border-width)
+					calc(var(--curve-size) + var(--border-width) * 0.5),
+				calc(var(--curve-size) + var(--border-width) * 0.5) var(--border-width),
+				/* top-right */ calc(100% - var(--border-width)) var(--border-width),
+				calc(100% - var(--border-width))
+					calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5)),
+				/* bottom-right 1 */
+					calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5))
+					calc(100% - var(--border-width)),
+				/* bottom-right 2 */ var(--border-width)
+					calc(100% - var(--border-width))
+			);
+			transition: clip-path 500ms;
+		}
+
+		.chat-submit:where(:hover, :focus)::after {
+			clip-path: polygon(
+				/* Top-left */ calc(100% - var(--border-width))
+					calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5)),
+				calc(100% - var(--border-width)) var(--border-width),
+				/* top-right */ calc(100% - var(--border-width)) var(--border-width),
+				calc(100% - var(--border-width))
+					calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5)),
+				/* bottom-right 1 */
+					calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5))
+					calc(100% - var(--border-width)),
+				/* bottom-right 2 */
+					calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5))
+					calc(100% - var(--border-width))
+			);
+			transition: 200ms;
+		}
+
+		.chat-submit:where(:hover, :focus) {
+			color: #fff;
+		}
+
+		@media (max-width: 1440px) {
+			/* .main__container {
+				min-height: 500px;
+			} */
+		}
+
+		@media (max-width: 990px) {
+			.header {
+				margin-bottom: 35px;
+			}
+
+			h1 {
+				border: none;
+			}
+
+			.main__container {
+				max-height: 500px;
+			}
+			.chat-box p {
+				line-height: 1.5;
+				font-size: 16px;
+			}
+
+			.chat-box-container {
+				height: 500px;
+			}
+
+			.footer {
+				padding: 40px 10px;
+			}
+			.footer__container {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.chat-input-container {
+				display: flex;
+				flex-direction: column;
+				min-height: 105px;
+				margin-bottom: 25px;
+				overflow: hidden;
+			}
+
+			.chat-input {
+				width: 100%;
+				border: none;
+				min-height: 50px;
+				margin-bottom: 25px;
+			}
+
+			.chat-input:focus {
+				border: none;
+			}
+
+			.chat-submit {
+				margin: 0;
+				padding: 12px 80px;
+				border: 0;
+				background-color: #827a7a;
+			}
+
+			.text-color {
+				text-align: center;
+				font-size: 12px;
+			}
+		}
+
+		@media (max-width: 768px) {
+			header {
+				margin-bottom: 28px;
+			}
+
+			.main__container {
+				max-height: 440px;
+			}
+
+			.footer {
+				padding: 15px 10px;
+			}
+		}
+
+		@media (max-width: 576px) {
+
+			h1{
+				font-size: 24px;
+			}
+			header {
+				padding: 10px 0;
+				font-size: 24px;
+				margin-bottom: 30px;
+			}
+
+			.main__container {
+				max-height: 500px;
+			}
+
+			.chat-box-container {
+			}
+
+			.text-color {
+				font-size: 10px;
+			}
+		}
+
+		@media (max-width: 420px) {
+
+			h1{
+				font-size: 18px;
+			}
+			.main__container {
+				max-height: 500px;
+			}
+		}
+
+		@media (max-width: 385px) {
+			.main__container {
+				max-height: 525px;
+			}
+		}
+	</style>
+	<body>
+		<header>
+			<h1>Chat-KONI</h1>
+		</header>
+
+		<!-- <div class="container">
+        <h1>Chat-KONI</h1>
+        
+          <div class="video-wrapper">
+            <div class="video-circle">
+            <img src="https://i.ibb.co/KySLt13/Untitled-video.gif" alt="video" width="100%" height="100%">
+          </div>
+        </div>
+      </div> -->
+
+		<main>
+			<div class="main__container">
+				<div class="chat-box-container">
+					<div class="chat-box" id="chat-box"></div>
+				</div>
+			</div>
+		</main>
+
+		<div class="footer">
+			<div class="footer__container">
+				<div class="chat-input-container">
+					<input
+						class="chat-input"
+						type="text"
+						id="chat-input"
+						placeholder="Type a message"
+					/>
+					<button class="chat-submit" id="chat-submit">Отправить</button>
+				</div>
+				<span class="text-color">
+					Наша модель в настоящее время находится в пилотном режиме, и возможны
+					ситуации, ответы могут быть неправильными или неточными. ->
+					<a
+						href="https://taplink.cc/uzlegal.ai"
+						target="blank"
+						rel="noreferrer"
+						class="underline red-text"
+						>Chat-KONI</a
+					>
+				</span>
+			</div>
+		</div>
+
+		<script>
+			(function () {
+				"use strict";
+
+				const chatBox = document.querySelector("#chat-box");
+				const chatInput = document.querySelector("#chat-input");
+				const chatSubmit = document.querySelector("#chat-submit");
+
+				chatSubmit.addEventListener("click", sendMessage);
+				chatInput.addEventListener("keypress", function (e) {
+					if (e.key === "Enter") {
+						sendMessage();
+					}
+				});
+
+				function sendMessage() {
+					const userMessage = chatInput.value.trim();
+					if (userMessage) {
+						appendChat("You", userMessage, false);
+						chatInput.value = "";
+						sendToServer(userMessage);
+					}
+				}
+
+				function appendChat(sender, message, realTimeTyping = true) {
+					const chatMessage = document.createElement("p");
+					chatMessage.innerHTML = `<strong>${sender}:</strong> `;
+					chatBox.appendChild(chatMessage);
+
+					if (realTimeTyping) {
+						let words = message.split(" ");
+						let index = 0;
+						const interval = setInterval(function () {
+							if (index < words.length) {
+								chatMessage.innerHTML += words[index] + " ";
+								index++;
+							} else {
+								clearInterval(interval);
+								chatBox.scrollTop = chatBox.scrollHeight;
+							}
+						}, 50);
+					} else {
+						chatMessage.innerHTML += message;
+						chatBox.scrollTop = chatBox.scrollHeight;
+					}
+				}
+
+				function sendToServer(userMessage) {
+					fetch("/get_response", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+						},
+						body: "user_input=" + userMessage,
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							const botMessage = data.response;
+
+							appendBotResponse(data);
+						})
+						.catch((error) => {
+							console.error("Ошибка при отправке запроса:", error);
+						});
+				}
+
+				function appendBotResponse(data) {
+					const botMessage = document.createElement("div");
+					botMessage.classList.add("bot-message");
+					const response = document.createElement("p");
+					response.classList.add("formal-response");
+
+					botMessage.appendChild(response);
+
+					const paragraphs = data.response.split("\n");
+					paragraphs.forEach(function (paragraph) {
+						const paragraphElement = document.createElement("p");
+						paragraphElement.textContent = paragraph.trim();
+						botMessage.appendChild(paragraphElement);
+					});
+
+					chatBox.appendChild(botMessage);
+					chatBox.scrollTop = chatBox.scrollHeight;
+				}
+			})();
+		</script>
+	</body>
+</html>
